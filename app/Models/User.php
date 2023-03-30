@@ -40,4 +40,9 @@ class User extends Authenticatable
         return self::where('mobile', $mobile)->first();
     }
 
+    public function relTasks(){
+        return $this->hasMany(Task::class);
+    }
+
+
 }

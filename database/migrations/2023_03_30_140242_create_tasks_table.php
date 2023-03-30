@@ -13,9 +13,17 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->
+            $table->unsignedBigInteger('user_id');
+            $table->string('title');
+            $table->longText('description');
+            $table->boolean('completed')->default(false);
+            $table->string('file')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
@@ -24,6 +32,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('tasks', function (Blueprint $table){
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('tasks');
     }
 };

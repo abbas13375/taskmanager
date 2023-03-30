@@ -24,3 +24,19 @@ Route::prefix('/auth')->group(function(){
 });
 
 
+Route::middleware('auth:sanctum')->group(function(){
+    Route::prefix('/task')->group(function(){
+        Route::get('/', [\App\Http\Controllers\TaskController::class, 'actionList']);
+        Route::post('/', [\App\Http\Controllers\TaskController::class, 'actionCreate']);
+
+        Route::get('/{id}', [\App\Http\Controllers\TaskController::class, 'actionDetail']);
+        Route::patch('/{id}', [\App\Http\Controllers\TaskController::class, 'actionUpdate']);
+        Route::delete('/{id}', [\App\Http\Controllers\TaskController::class, 'actionRemove']);
+        Route::put('/{id}/complete', [\App\Http\Controllers\TaskController::class, 'actionComplete']);
+        Route::put('/{id}/restore', [\App\Http\Controllers\TaskController::class, 'actionRestore']);
+
+    });
+
+
+});
+
